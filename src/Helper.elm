@@ -1,11 +1,52 @@
 module Helper exposing (..)
 
-import Html
-import Html.Attributes
+
+type GradeStatus
+    = Approved
+    | Failed
+    | Pending
 
 
+categoricalGrade : List Float -> List GradeStatus
+categoricalGrade grades =
+    List.map gradeToStatus grades
 
--- Puedes usar una definición como la siguiente para probar y visualizar tus resultados, solo debes definir "headers" y "hyperlink"
---main : Html.Html msg
---main =
---    Html.div [] [ headers "Titulos", hyperlink "https://upa.edu.mx" "My School" ]
+
+gradeToStatus : Float -> GradeStatus
+gradeToStatus grade =
+    if grade < 0 then
+        Pending
+
+    else if grade > 7 then
+        Approved
+
+    else
+        Failed
+
+
+type AirplaneStatus
+    = OnTime
+    | Boarding
+    | Delayed
+    | Cancelled
+
+
+airplaneScheduleAction : AirplaneStatus -> String
+airplaneScheduleAction status =
+    case status of
+        Cancelled ->
+            "Pedir reembolso"
+
+        Delayed ->
+            "Esperar"
+
+        OnTime ->
+            "Esperar"
+
+        Boarding ->
+            "Buscar boleto"
+
+
+airportAction : List AirplaneStatus -> List String
+airportAction statuses =
+    List.map airplaneScheduleAction statuses
