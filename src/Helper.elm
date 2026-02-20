@@ -1,4 +1,4 @@
-module Helper exposing (..)
+import Helper exposing (..)
 
 
 type GradeStatus
