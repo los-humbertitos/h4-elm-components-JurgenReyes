@@ -1,52 +1,37 @@
-import Helper exposing (..)
+module Helper exposing (evalChars, headers, hyperlink, isUpperChars, joinWords)
+
+import Char
+import Html exposing (Html, a, div, h1, h2, h3, h4, h5, h6, text)
+import Html.Attributes exposing (href)
 
 
-type GradeStatus
-    = Approved
-    | Failed
-    | Pending
+joinWords : String -> String -> String
+joinWords str1 str2 =
+    str1 ++ str2
 
 
-categoricalGrade : List Float -> List GradeStatus
-categoricalGrade grades =
-    List.map gradeToStatus grades
+isUpperChars : List Char -> List Bool
+isUpperChars chars =
+    List.map Char.isUpper chars
 
 
-gradeToStatus : Float -> GradeStatus
-gradeToStatus grade =
-    if grade < 0 then
-        Pending
-
-    else if grade > 7 then
-        Approved
-
-    else
-        Failed
+evalChars : List Char -> (Char -> Bool) -> List Bool
+evalChars chars evaluator =
+    List.map evaluator chars
 
 
-type AirplaneStatus
-    = OnTime
-    | Boarding
-    | Delayed
-    | Cancelled
+headers : String -> Html msg
+headers content =
+    div []
+        [ h1 [] [ text content ]
+        , h2 [] [ text content ]
+        , h3 [] [ text content ]
+        , h4 [] [ text content ]
+        , h5 [] [ text content ]
+        , h6 [] [ text content ]
+        ]
 
 
-airplaneScheduleAction : AirplaneStatus -> String
-airplaneScheduleAction status =
-    case status of
-        Cancelled ->
-            "Pedir reembolso"
-
-        Delayed ->
-            "Esperar"
-
-        OnTime ->
-            "Esperar"
-
-        Boarding ->
-            "Buscar boleto"
-
-
-airportAction : List AirplaneStatus -> List String
-airportAction statuses =
-    List.map airplaneScheduleAction statuses
+hyperlink : String -> String -> Html msg
+hyperlink url label =
+    a [ href url ] [ text label ]
